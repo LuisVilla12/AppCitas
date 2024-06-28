@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { SafeAreaView,Text,View,StyleSheet,ScrollView,Modal,Pressable, FlatList
 } from 'react-native';
 import Formulario from "./src/components/Formulario";
+import Citas from "./src/components/Citas";
+
 function App(): React.JSX.Element {
   // Parte de los hooks
   const [citas,setCitas]= useState([]);
@@ -24,8 +26,15 @@ function App(): React.JSX.Element {
           <Text style={styles.textoNuevaCita} onPress={()=>setModalNuevaCita(true)}>Nueva cita</Text>
         </Pressable>
         {/*citas */}
-        {citas.length===0?<Text style={styles.noCitas}>No hay citas registradas</Text>:
-        <FlatList data={citas} renderItem={} keyExtractor={} }
+        {
+          citas.length===0?<Text style={styles.noCitas}>No hay citas registradas</Text>:
+          <FlatList data={citas}  keyExtractor={(item)=>item.id}
+                    renderItem={({item})=>{
+            return (
+              <Citas item={item} ></Citas>
+            )
+          }} ></FlatList>
+            }
         {/*Formulario*/}
         <Formulario modalNuevaCita={modalNuevaCita} setModalNuevaCita={setModalNuevaCita} citas={citas} setCitas={setCitas}></Formulario>
       </ScrollView>
